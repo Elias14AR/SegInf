@@ -5,6 +5,7 @@ const Register = () => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -19,8 +20,10 @@ const Register = () => {
 
     if (response.ok) {
       alert('Usuario registrado con éxito')
+      // Después de registrar al usuario, redirigir a la página de login
+      window.location.href = '/login'
     } else {
-      alert(data.message)
+      setError(data.message || 'Error al registrar usuario')
     }
   }
 
@@ -30,6 +33,7 @@ const Register = () => {
       <div className="p-10 bg-blue-200">
         <h1 className="text-center text-3xl text-white">Registro de Usuario</h1>
         <form onSubmit={handleSubmit} className="mt-6 max-w-sm mx-auto">
+          {error && <p className="text-red-500 text-center">{error}</p>}
           <div className="mb-4">
             <label htmlFor="username" className="block text-white">Nombre de Usuario</label>
             <input

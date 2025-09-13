@@ -21,7 +21,10 @@ const Login = () => {
     if (response.ok) {
       // Si la respuesta es exitosa, redirigir al usuario o hacer algo más
       alert('Login exitoso')
-      // Aquí puedes guardar el token JWT en el localStorage o en el contexto de tu aplicación
+      // Guardar el token JWT en el localStorage
+      localStorage.setItem('token', data.token)
+      // Redirigir al usuario a una página protegida o al home
+      window.location.href = '/'
     } else {
       // Si hay un error, mostrarlo
       setError(data.message || 'Error al iniciar sesión')
