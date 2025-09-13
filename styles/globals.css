@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* styles.css */
 
 /* Estilos generales del cuerpo */
@@ -11,6 +7,48 @@ body {
   margin: 0;
   padding: 0;
   color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-top: 80px; /* Espacio adicional por el navbar */
+}
+
+/* Navbar */
+nav {
+  background-color: #2C3E50;
+  width: 100%;
+  padding: 10px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.nav-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.nav-wrapper ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.nav-wrapper li {
+  padding: 10px 15px;
+}
+
+.nav-wrapper a {
+  color: white;
+  font-size: 1.1em;
+  text-decoration: none;
+}
+
+.nav-wrapper a:hover {
+  text-decoration: underline;
 }
 
 /* Títulos principales */
@@ -32,6 +70,37 @@ p {
   margin: 15px 0;
 }
 
+/* Contenedor para la página principal */
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 100px; /* Ajusta el espacio por debajo del navbar */
+  width: 90%;
+  max-width: 1200px; /* Limita el ancho máximo */
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+/* Alinear imagen y texto horizontalmente */
+.image-text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.card-image img {
+  width: 200px;  /* Ajusta el tamaño de la imagen */
+  height: auto;
+  border-radius: 10px;
+}
+
 /* Flex container para organizar elementos de forma más ordenada */
 .flex-container {
   display: flex;
@@ -39,6 +108,7 @@ p {
   flex-wrap: wrap;
   gap: 20px;
   margin-top: 20px;
+  width: 100%;
 }
 
 /* Estilo de las tarjetas de los peleadores */
@@ -52,12 +122,6 @@ p {
 
 .custom-card:hover {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-.card-image img {
-  width: 100%;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
 }
 
 .card-content {
@@ -97,12 +161,16 @@ table {
   margin-top: 30px;
   border-collapse: collapse;
   text-align: center;
+  table-layout: fixed; /* Asegura que las celdas se ajusten */
 }
 
 table th, table td {
   padding: 12px;
   border: 1px solid #ddd;
   font-size: 1.1em;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Evita que el texto se desborde */
+  white-space: nowrap; /* Evita que el texto se rompa */
 }
 
 table th {
@@ -141,4 +209,223 @@ footer {
 footer h1 {
   margin: 0;
   font-size: 1.5em;
+}
+
+/* styles.css */
+
+/* Estilos generales del cuerpo */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-top: 80px; /* Espacio adicional por el navbar */
+}
+
+/* Navbar */
+nav {
+  background-color: #2C3E50;
+  width: 100%;
+  padding: 10px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.nav-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.nav-wrapper ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.nav-wrapper li {
+  padding: 10px 15px;
+}
+
+.nav-wrapper a {
+  color: white;
+  font-size: 1.1em;
+  text-decoration: none;
+}
+
+.nav-wrapper a:hover {
+  text-decoration: underline;
+}
+
+/* Estilo para el contenedor principal del formulario */
+.form-container {
+  width: 100%;
+  max-width: 400px; /* Limita el ancho del formulario */
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para el título */
+h1 {
+  color: #2C3E50;
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* Estilo para los campos del formulario */
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 1em;
+}
+
+/* Estilo para el botón de envío */
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #27AE60;
+  color: white;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2ECC71;
+}
+
+/* Estilo para el mensaje de error */
+.error-message {
+  color: #E74C3C;
+  text-align: center;
+  font-size: 1.1em;
+  margin-bottom: 15px;
+}
+
+/* Estilos generales del cuerpo */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-top: 80px; /* Espacio adicional por el navbar */
+}
+
+/* Navbar */
+nav {
+  background-color: #2C3E50;
+  width: 100%;
+  padding: 10px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.nav-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px; /* Añadimos espacio a los lados del navbar */
+}
+
+.nav-wrapper ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.nav-wrapper li {
+  padding: 10px 15px;
+}
+
+.nav-wrapper a {
+  color: white;
+  font-size: 1.1em;
+  text-decoration: none;
+}
+
+.nav-wrapper a:hover {
+  text-decoration: underline;
+}
+
+/* Estilo para el formulario de registro */
+.form-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para el título del formulario */
+h1 {
+  color: #2C3E50;
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* Estilo para los campos de entrada */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 1em;
+}
+
+/* Estilo para el botón de registro */
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #27AE60;
+  color: white;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2ECC71;
+}
+
+/* Estilo para el mensaje de error */
+.error-message {
+  color: #E74C3C;
+  text-align: center;
+  font-size: 1.1em;
+  margin-bottom: 15px;
 }

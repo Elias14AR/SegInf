@@ -1,75 +1,73 @@
-import { useState } from 'react'
-import Navbar from '../components/Navbar'
+import { useState } from 'react';
+import Navbar from '../components/Navbar';
 
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // Realizar la solicitud POST para iniciar sesión
     const response = await fetch('/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ correo: email, contrasena: password }),
-    })
+    });
 
-    const data = await response.json()
+    const data = await response.json();
 
     if (response.ok) {
       // Si la respuesta es exitosa, guardar el token en localStorage
-      localStorage.setItem('token', data.token)
+      localStorage.setItem('token', data.token);
 
       // Verificar si el usuario es admin para redirigir
-      const decodedToken = JSON.parse(atob(data.token.split('.')[1]))  // Decodificar el JWT
+      const decodedToken = JSON.parse(atob(data.token.split('.')[1])); // Decodificar el JWT
       if (decodedToken.role === 'admin') {
-        window.location.href = '/admin'  // Redirige a la página de administración si es admin
+        window.location.href = '/admin';  // Redirige a la página de administración si es admin
       } else {
-        window.location.href = '/'  // Redirige al home si no es admin
+        window.location.href = '/';  // Redirige al home si no es admin
       }
     } else {
-      setError(data.message || 'Error al iniciar sesión')
+      setError(data.message || 'Error al iniciar sesión');
     }
-  }
+  };
 
   return (
     <div>
       <Navbar />
-      <div className="p-10 bg-blue-200">
-        <h1 className="text-center text-3xl text-white">Iniciar Sesión</h1>
-        <form onSubmit={handleSubmit} className="mt-6 max-w-sm mx-auto">
-          {error && <p className="text-red-500 text-center">{error}</p>}
+      <div className="form-container">
+        <h1>Iniciar Sesión</h1>
+        <form onSubmit={handleSubmit}>
+          {error && <p className="error-message">{error}</p>}
           <div className="mb-4">
-            <label htmlFor="email" className="block text-white">Correo Electrónico</label>
+            <label htmlFor="email">Correo Electrónico</label>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full border px-3 py-2 rounded"
               placeholder="Ingresa tu correo"
               required
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block text-white">Contraseña</label>
+            <label htmlFor="password">Contraseña</label>
             <input
               type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full border px-3 py-2 rounded"
               placeholder="Ingresa tu contraseña"
               required
             />
           </div>
-          <button type="submit" className="w-full bg-green-500 py-2 text-white rounded">Iniciar Sesión</button>
+          <button type="submit">Iniciar Sesión</button>
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
