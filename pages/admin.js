@@ -1,21 +1,32 @@
+// pages/admin.js
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { isAuthenticated } from '../lib/auth'
+import { isAuthenticated } from '../lib/auth'  // Verifica si el usuario está autenticado
 
 const AdminPage = () => {
   const router = useRouter()
-  const [users, setUsers] = useState([]) // Para almacenar los usuarios
+  const [users, setUsers] = useState([])
   const [error, setError] = useState('')
 
-  // Obtener los usuarios (esto puede hacerse desde tu backend)
+  // Verificar si el usuario es admin y redirigir si no lo es
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (!isAuthenticated() || !token || JSON.parse(atob(token.split('.')[1])).role !== 'admin') {
+      router.push('/login')  // Redirige al login si no es admin
+    } else {
+      fetchUsers()  // Obtiene los usuarios si es admin
+    }
+  }, [])
+
+  // Obtener la lista de usuarios
   const fetchUsers = async () => {
-    const response = await fetch('/api/admin/getUsers', { // Aquí deberías tener una API para obtener los usuarios
+    const response = await fetch('/api/admin/getUsers', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
       },
     })
-
+    
     const data = await response.json()
 
     if (response.ok) {
@@ -25,16 +36,7 @@ const AdminPage = () => {
     }
   }
 
-  useEffect(() => {
-    // Verificar que el usuario esté autenticado y sea admin
-    const token = localStorage.getItem('token')
-    if (!isAuthenticated() || !token || JSON.parse(atob(token.split('.')[1])).role !== 'admin') {
-      router.push('/login')  // Redirige si no es admin
-    } else {
-      fetchUsers()  // Obtiene los usuarios si es admin
-    }
-  }, [])
-
+  // Función para actualizar el rol de un usuario
   const updateUserRole = async (userId, newRole) => {
     const response = await fetch('/api/admin/updateRole', {
       method: 'PATCH',
@@ -44,14 +46,35 @@ const AdminPage = () => {
       },
       body: JSON.stringify({ userId, newRole }),
     })
-
+    
     const data = await response.json()
 
     if (response.ok) {
       alert('Rol actualizado con éxito')
-      fetchUsers() // Vuelve a obtener los usuarios después de actualizar el rol
+      fetchUsers() // Refresca la lista de usuarios después de la actualización
     } else {
       alert(data.message || 'Error al actualizar el rol')
+    }
+  }
+
+  // Función para eliminar un usuario
+  const deleteUser = async (userId) => {
+    const response = await fetch('/api/admin/deleteUser', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({ userId }),
+    })
+
+    const data = await response.json()
+
+    if (response.ok) {
+      alert('Usuario eliminado con éxito')
+      fetchUsers() // Refresca la lista después de eliminar
+    } else {
+      alert(data.message || 'Error al eliminar el usuario')
     }
   }
 
@@ -81,6 +104,11 @@ const AdminPage = () => {
                   onClick={() => updateUserRole(user._id, user.role === 'user' ? 'admin' : 'user')}
                 >
                   Cambiar a {user.role === 'user' ? 'admin' : 'user'}
+                </button>
+                <button
+                  onClick={() => deleteUser(user._id)}
+                >
+                  Eliminar
                 </button>
               </td>
             </tr>
