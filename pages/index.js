@@ -44,29 +44,20 @@ const HomePage = () => {
         <h1>Bienvenidos a MMA Blog</h1>
         <p>El blog más actualizado sobre MMA.</p>
 
-        <div>
-          {!isAuthenticated ? (
-            <>
-              <Link href="/login">
-                Iniciar sesión
-              </Link>
-              <br />
-              <Link href="/register">
-                Registrar usuario
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link href="/admin">
-                Ir a la administración
-              </Link>
-              <br />
-              <button onClick={handleLogout} className="text-red-500">
-                Cerrar sesión
-              </button>
-            </>
-          )}
-        </div>
+<div> 
+  {isAuthenticated ? (
+    <>
+      <Link href="/admin">
+        Ir a la administración
+      </Link>
+      <br />
+      <button onClick={handleLogout} className="text-red-500">
+        Cerrar sesión
+      </button>
+    </>
+  ) : null}
+</div>
+
 
         <h4 className="cent">Ranking Libra por libra actual</h4>
 
