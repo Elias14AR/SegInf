@@ -1,4 +1,3 @@
-// pages/api/auth/register.js
 import bcrypt from 'bcryptjs'
 import User from '../../../models/User'
 import connectDB from '../../../lib/dbConnect'
@@ -13,6 +12,9 @@ export default async function handler(req, res) {
     const userExists = await User.findOne({ correo })
     if (userExists) return res.status(400).json({ message: 'Correo ya registrado' })
 
+    // Si el correo es el tuyo, asigna el rol de admin
+    const assignedRole = correo === 'tu-email@dominio.com' ? 'admin' : role || 'user'
+
     // Encriptar la contraseña
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(contrasena, salt)
@@ -23,7 +25,7 @@ export default async function handler(req, res) {
         nombre_usuario,
         correo,
         contrasena: hashedPassword,
-        role: role || 'user', // Si no se pasa el role, asigna 'user' por defecto
+        role: assignedRole,
       })
 
       await user.save()
