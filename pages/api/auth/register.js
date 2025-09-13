@@ -1,3 +1,4 @@
+// pages/api/auth/register.js
 import bcrypt from 'bcryptjs'
 import User from '../../../models/User'
 import connectDB from '../../../lib/dbConnect'
@@ -6,7 +7,7 @@ connectDB()
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const { nombre_usuario, correo, contrasena } = req.body
+    const { nombre_usuario, correo, contrasena, role } = req.body
 
     // Verificar si el correo ya existe
     const userExists = await User.findOne({ correo })
@@ -17,17 +18,19 @@ export default async function handler(req, res) {
     const hashedPassword = await bcrypt.hash(contrasena, salt)
 
     try {
-      // Crear el nuevo usuario
+      // Crear el nuevo usuario, asignando el role
       const user = new User({
         nombre_usuario,
         correo,
         contrasena: hashedPassword,
+        role: role || 'user', // Si no se pasa el role, asigna 'user' por defecto
       })
 
       await user.save()
 
       return res.status(201).json({ message: 'Usuario registrado exitosamente' })
     } catch (error) {
+      console.error('❌ Error al registrar usuario:', error)
       return res.status(500).json({ message: 'Error al registrar el usuario' })
     }
   } else {

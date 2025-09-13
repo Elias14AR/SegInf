@@ -1,3 +1,4 @@
+// pages/register.js
 import { useState } from 'react'
 import Navbar from '../components/Navbar'
 
@@ -5,6 +6,7 @@ const Register = () => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [role, setRole] = useState('user')  // Default role is 'user'
   const [error, setError] = useState('')
 
   const handleSubmit = async (e) => {
@@ -13,7 +15,7 @@ const Register = () => {
     const response = await fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nombre_usuario: username, correo: email, contrasena: password }),
+      body: JSON.stringify({ nombre_usuario: username, correo: email, contrasena: password, role: role }), // Send role
     })
 
     const data = await response.json()
@@ -69,6 +71,18 @@ const Register = () => {
               placeholder="Ingresa tu contraseña"
               required
             />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="role" className="block text-white">Rol</label>
+            <select
+              id="role"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="w-full border px-3 py-2 rounded"
+            >
+              <option value="user">Usuario</option>
+              <option value="admin">Administrador</option>
+            </select>
           </div>
           <button type="submit" className="w-full bg-green-500 py-2 text-white rounded">Registrar</button>
         </form>
