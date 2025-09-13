@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { isAuthenticated } from '../lib/auth'
 import Link from 'next/link'
 
 const AdminPage = () => {
@@ -79,14 +78,9 @@ const AdminPage = () => {
       <h1>Gestión de Usuarios (Solo para Administradores)</h1>
 
       {/* Enlace para regresar al inicio */}
-      <Link href="/logout" className="text-red-500">
-        Cerrar sesión
-        </Link>
-
-        <Link href="/" className="text-blue-500">
+      <Link href="/" className="text-blue-500">
         Regresar al inicio
-        </Link>
-      
+      </Link>
 
       {error && <p>{error}</p>}
 
