@@ -79,14 +79,14 @@ const AdminPage = () => {
       <h1>Gestión de Usuarios (Solo para Administradores)</h1>
 
       {/* Enlace para regresar al inicio */}
-      <Link href="/">
-        <a className="text-blue-500">Regresar al inicio</a>
-      </Link>
-
-        <Link href="/logout">
-        <a className="text-red-500">Cerrar sesión</a>
+      <Link href="/logout" className="text-red-500">
+        Cerrar sesión
         </Link>
 
+        <Link href="/" className="text-blue-500">
+        Regresar al inicio
+        </Link>
+      
 
       {error && <p>{error}</p>}
 
