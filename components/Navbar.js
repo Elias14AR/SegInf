@@ -4,15 +4,15 @@ const Navbar = () => {
   return (
     <nav className="bg-blue-500 p-4">
       <div className="max-w-screen-xl mx-auto flex justify-between">
-        <Link href="/">
-          <a className="text-white text-xl">MMA Blog</a>
+        <Link href="/" className="text-white text-xl">
+          MMA Blog
         </Link>
         <div className="flex space-x-4">
-          <Link href="/login">
-            <a className="text-white">Iniciar Sesión</a>
+          <Link href="/login" className="text-white">
+            Iniciar Sesión
           </Link>
-          <Link href="/register">
-            <a className="text-white">Registrarse</a>
+          <Link href="/register" className="text-white">
+            Registrarse
           </Link>
         </div>
       </div>
