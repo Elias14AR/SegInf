@@ -1,24 +1,22 @@
-// pages/admin.js
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { isAuthenticated } from '../lib/auth'  // Verifica si el usuario está autenticado
+import { isAuthenticated } from '../lib/auth'
+import Link from 'next/link'
 
 const AdminPage = () => {
   const router = useRouter()
   const [users, setUsers] = useState([])
   const [error, setError] = useState('')
 
-  // Verificar si el usuario es admin y redirigir si no lo es
   useEffect(() => {
     const token = localStorage.getItem('token')
-    if (!isAuthenticated() || !token || JSON.parse(atob(token.split('.')[1])).role !== 'admin') {
+    if (!token || JSON.parse(atob(token.split('.')[1])).role !== 'admin') {
       router.push('/login')  // Redirige al login si no es admin
     } else {
       fetchUsers()  // Obtiene los usuarios si es admin
     }
   }, [])
 
-  // Obtener la lista de usuarios
   const fetchUsers = async () => {
     const response = await fetch('/api/admin/getUsers', {
       method: 'GET',
@@ -36,7 +34,6 @@ const AdminPage = () => {
     }
   }
 
-  // Función para actualizar el rol de un usuario
   const updateUserRole = async (userId, newRole) => {
     const response = await fetch('/api/admin/updateRole', {
       method: 'PATCH',
@@ -46,7 +43,7 @@ const AdminPage = () => {
       },
       body: JSON.stringify({ userId, newRole }),
     })
-    
+
     const data = await response.json()
 
     if (response.ok) {
@@ -57,7 +54,6 @@ const AdminPage = () => {
     }
   }
 
-  // Función para eliminar un usuario
   const deleteUser = async (userId) => {
     const response = await fetch('/api/admin/deleteUser', {
       method: 'DELETE',
@@ -81,6 +77,16 @@ const AdminPage = () => {
   return (
     <div>
       <h1>Gestión de Usuarios (Solo para Administradores)</h1>
+
+      {/* Enlace para regresar al inicio */}
+      <Link href="/">
+        <a className="text-blue-500">Regresar al inicio</a>
+      </Link>
+
+        <Link href="/logout">
+        <a className="text-red-500">Cerrar sesión</a>
+        </Link>
+
 
       {error && <p>{error}</p>}
 

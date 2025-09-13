@@ -17,9 +17,9 @@ export default async function handler(req, res) {
     const isMatch = await bcrypt.compare(contrasena, user.contrasena)
     if (!isMatch) return res.status(400).json({ message: 'Contraseña incorrecta' })
 
-    // Crear el token JWT
+    // Crear el token JWT incluyendo el rol
     const token = jwt.sign(
-      { id: user._id, nombre_usuario: user.nombre_usuario },
+      { id: user._id, nombre_usuario: user.nombre_usuario, role: user.role }, // Agregar role aquí
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     )

@@ -19,14 +19,17 @@ const Login = () => {
     const data = await response.json()
 
     if (response.ok) {
-      // Si la respuesta es exitosa, redirigir al usuario o hacer algo más
-      alert('Login exitoso')
-      // Guardar el token JWT en el localStorage
+      // Si la respuesta es exitosa, guardar el token en localStorage
       localStorage.setItem('token', data.token)
-      // Redirigir al usuario a una página protegida o al home
-      window.location.href = '/'
+
+      // Verificar si el usuario es admin para redirigir
+      const decodedToken = JSON.parse(atob(data.token.split('.')[1]))  // Decodificar el JWT
+      if (decodedToken.role === 'admin') {
+        window.location.href = '/admin'  // Redirige a la página de administración si es admin
+      } else {
+        window.location.href = '/'  // Redirige al home si no es admin
+      }
     } else {
-      // Si hay un error, mostrarlo
       setError(data.message || 'Error al iniciar sesión')
     }
   }
